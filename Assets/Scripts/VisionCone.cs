@@ -27,9 +27,6 @@ public class VisionCone : MonoBehaviour
     void Update()
     {
         DrawVisionCone();
-        foreach(GameObject obj in visibleTargets){
-            Debug.Log(obj.name);
-        }
     }
 
     void DrawVisionCone() {

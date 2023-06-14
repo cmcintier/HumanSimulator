@@ -11,11 +11,13 @@ public class AIMovementController : MonoBehaviour
 
     Vector3 destinationPoint;
     bool walkpointSet;
+    public bool hasInteracted;
     [SerializeField] float walkRange;
 
     // Start is called before the first frame update
     void Start()
     {
+        hasInteracted = false;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -26,15 +28,20 @@ public class AIMovementController : MonoBehaviour
     }
 
     void Wander() {
-        if (walkpointSet) {
-            agent.SetDestination(destinationPoint);
+        if (!hasInteracted) {
+            if (walkpointSet) {
+                agent.SetDestination(destinationPoint);
 
-            if (Vector3.Distance(transform.position, destinationPoint) < 10) {
-                walkpointSet = false;
+                if (Vector3.Distance(transform.position, destinationPoint) < 10) {
+                    walkpointSet = false;
+                }
+            }
+            else {
+                SearchForDestination();
             }
         }
         else {
-            SearchForDestination();
+            agent.isStopped = true;
         }
     }
 
@@ -48,4 +55,5 @@ public class AIMovementController : MonoBehaviour
             walkpointSet = true;
         }
     }
+
 }
